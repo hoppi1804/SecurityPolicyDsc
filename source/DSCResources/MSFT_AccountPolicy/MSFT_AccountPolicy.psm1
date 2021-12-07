@@ -311,7 +311,8 @@ function Test-TargetResource
         $Enforce_user_logon_restrictions,
 
         [Parameter()]
-        [ValidateRange(10, 99999)]
+        # [ValidateRange(10, 99999)]
+        [ValidateScript({ return ($_ -eq 0 -or (10..99999) -contains $_); })]
         [System.UInt32]
         $Maximum_lifetime_for_service_ticket,
 
