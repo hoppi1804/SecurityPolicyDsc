@@ -54,7 +54,7 @@ function Get-TargetResource
             }
             elseif ($securityOption -eq 'Network_access_Restrict_clients_allowed_to_make_remote_calls_to_SAM')
             {
-                [array]$resultValue = ConvertTo-CimRestrictedRemoteSam -InputObject $currentValue
+                $resultValue = [array](ConvertTo-CimRestrictedRemoteSam -InputObject $currentValue)
             }
             else
             {
