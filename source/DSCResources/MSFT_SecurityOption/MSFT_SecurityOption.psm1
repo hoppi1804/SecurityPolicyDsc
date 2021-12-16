@@ -52,10 +52,10 @@ function Get-TargetResource
             {
                 $resultValue = ($currentValue -split '7,')[-1].Trim()
             }
-            elseif ($securityOption -eq 'Network_access_Restrict_clients_allowed_to_make_remote_calls_to_SAM')
-            {
-                $resultValue = [array](ConvertTo-CimRestrictedRemoteSam -InputObject $currentValue)
-            }
+            # elseif ($securityOption -eq 'Network_access_Restrict_clients_allowed_to_make_remote_calls_to_SAM')
+            #{
+            #    $resultValue = [array](ConvertTo-CimRestrictedRemoteSam -InputObject $currentValue)
+            #}
             else
             {
                 if ($currentValue -match ',')
@@ -618,11 +618,11 @@ function Set-TargetResource
                         $message = Format-LogonMessage -Message $policy.Value
                         $newValue = "$($policyData.Option.String)" + $message
                     }
-                    elseif ($policy.Key -eq 'Network_access_Restrict_clients_allowed_to_make_remote_calls_to_SAM')
-                    {
-                        $message = Format-RestrictedRemoteSam -SecurityDescriptor $policy.Value
-                        $newValue = "$($policyData.Option.String)" + $message
-                    }
+                    #elseif ($policy.Key -eq 'Network_access_Restrict_clients_allowed_to_make_remote_calls_to_SAM')
+                    #{
+                    #    $message = Format-RestrictedRemoteSam -SecurityDescriptor $policy.Value
+                    #    $newValue = "$($policyData.Option.String)" + $message
+                    #}
                     elseif ($policy.Key -eq 'Network_access_Remotely_accessible_registry_paths' -OR $policy.Key -eq 'Network_access_Remotely_accessible_registry_paths_and_subpaths')
                     {
                         $newValue = $policy.Value.replace(',',"`0")
@@ -1164,16 +1164,15 @@ function Test-TargetResource
             {
                 $desiredSecurityOptionValue = Format-LogonMessage -Message $desiredSecurityOptions[$policy]
             }
-            elseif ($policy -eq 'Network_access_Restrict_clients_allowed_to_make_remote_calls_to_SAM')
-            {
-                $testRemoteSamParameters = @{
-                    DesiredSetting = $Network_access_Restrict_clients_allowed_to_make_remote_calls_to_SAM
-                    CurrentSetting = $currentSecurityOptions.Network_access_Restrict_clients_allowed_to_make_remote_calls_to_SAM
-                }
-
-                $results += Test-RestrictedRemoteSam @testRemoteSamParameters
-                continue
-            }
+            # elseif ($policy -eq 'Network_access_Restrict_clients_allowed_to_make_remote_calls_to_SAM')
+            #{
+            #    $testRemoteSamParameters = @{
+            #        DesiredSetting = $Network_access_Restrict_clients_allowed_to_make_remote_calls_to_SAM
+            #        CurrentSetting = $currentSecurityOptions.Network_access_Restrict_clients_allowed_to_make_remote_calls_to_SAM
+            #    }
+            #    $results += Test-RestrictedRemoteSam @testRemoteSamParameters
+            #    continue
+            #}
             else
             {
                 $desiredSecurityOptionValue = $desiredSecurityOptions[$policy]
