@@ -382,7 +382,8 @@ function Set-TargetResource
         $Network_access_Restrict_anonymous_access_to_Named_Pipes_and_Shares,
 
         [Parameter()]
-        [Microsoft.Management.Infrastructure.CimInstance[]]
+        # [Microsoft.Management.Infrastructure.CimInstance[]]
+        [System.String]
         $Network_access_Restrict_clients_allowed_to_make_remote_calls_to_SAM,
 
         [Parameter()]
@@ -957,7 +958,8 @@ function Test-TargetResource
         $Network_access_Restrict_anonymous_access_to_Named_Pipes_and_Shares,
 
         [Parameter()]
-        [Microsoft.Management.Infrastructure.CimInstance[]]
+        # [Microsoft.Management.Infrastructure.CimInstance[]]
+        [System.String]
         $Network_access_Restrict_clients_allowed_to_make_remote_calls_to_SAM,
 
         [Parameter()]
