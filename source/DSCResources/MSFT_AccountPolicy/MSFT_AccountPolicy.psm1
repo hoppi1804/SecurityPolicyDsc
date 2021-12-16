@@ -49,6 +49,10 @@ function Get-TargetResource
             if ($resultValue -eq -1 -and $accountPolicy -in 'Maximum_Password_Age','Account_Lockout_Duration')
             {
                 $resultValue = 0
+            }            
+            elseif ([string]::IsNullOrEmpty($resultValue) -and @("Maximum_lifetime_for_service_ticket", "Maximum_lifetime_for_user_ticket", "Maximum_lifetime_for_user_ticket_renewal", "Maximum_tolerance_for_computer_clock_synchronization") -icontains $accountPolicy) 
+            {
+                $resultValue = 100000;
             }
         }
         else
@@ -136,22 +140,22 @@ function Set-TargetResource
 
         [Parameter()]
         # [ValidateRange(10, 99999)]
-        [ValidateScript({ return ($_ -eq 0 -or (10..99999) -contains $_); })]
+        [ValidateScript({ return ($_ -eq 0 -or (10..100000) -contains $_); })]
         [System.UInt32]
         $Maximum_lifetime_for_service_ticket,
 
         [Parameter()]
-        [ValidateRange(0, 99999)]
+        [ValidateRange(0, 100000)]
         [System.UInt32]
         $Maximum_lifetime_for_user_ticket,
 
         [Parameter()]
-        [ValidateRange(0, 99999)]
+        [ValidateRange(0, 100000)]
         [System.UInt32]
         $Maximum_lifetime_for_user_ticket_renewal,
 
         [Parameter()]
-        [ValidateRange(0, 99999)]
+        [ValidateRange(0, 100000)]
         [System.UInt32]
         $Maximum_tolerance_for_computer_clock_synchronization
     )
@@ -197,6 +201,10 @@ function Set-TargetResource
                             be -1.
                         #>
                         $newValue = -1
+                    }
+                    elseif (@("Maximum_lifetime_for_service_ticket", "Maximum_lifetime_for_user_ticket", "Maximum_lifetime_for_user_ticket_renewal", "Maximum_tolerance_for_computer_clock_synchronization") -icontains $policy.Key -and $policy.Value -eq 100000)
+                    {
+                        $newValue = "";
                     }
                     else
                     {
@@ -312,22 +320,22 @@ function Test-TargetResource
 
         [Parameter()]
         # [ValidateRange(10, 99999)]
-        [ValidateScript({ return ($_ -eq 0 -or (10..99999) -contains $_); })]
+        [ValidateScript({ return ($_ -eq 0 -or (10..100000) -contains $_); })]
         [System.UInt32]
         $Maximum_lifetime_for_service_ticket,
 
         [Parameter()]
-        [ValidateRange(0, 99999)]
+        [ValidateRange(0, 100000)]
         [System.UInt32]
         $Maximum_lifetime_for_user_ticket,
 
         [Parameter()]
-        [ValidateRange(0, 99999)]
+        [ValidateRange(0, 100000)]
         [System.UInt32]
         $Maximum_lifetime_for_user_ticket_renewal,
 
         [Parameter()]
-        [ValidateRange(0, 99999)]
+        [ValidateRange(0, 100000)]
         [System.UInt32]
         $Maximum_tolerance_for_computer_clock_synchronization
     )
